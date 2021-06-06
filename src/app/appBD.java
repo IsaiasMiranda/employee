@@ -2,6 +2,7 @@ package app;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import db.DB;
 
@@ -25,8 +26,12 @@ public class appBD {
 			if (validate > 0)
 				System.out.println("Done!");
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			DB.closeStatement(pst);
+			DB.closeConnection();
 		}
 	}
 
