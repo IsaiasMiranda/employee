@@ -5,9 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import db.DB;
-import db.DbException;
 
-public class appBD {
+public class appBDUpdate {
 
 	public static void main(String[] args) {
 
@@ -17,24 +16,26 @@ public class appBD {
 		try {
 			conn = DB.openConnection();
 
-			pst = conn.prepareStatement("INSERT INTO user (user, email) VALUES (?, ?)");
+			String sql = "UPDATE user SET user=? WHERE id=?";
 
-			pst.setString(1, "Fabio Miranda");
-			pst.setString(2, "fb-naval@gmail.com");
+			pst = conn.prepareStatement(sql);
+
+			pst.setString(1, "Isaias Miranda");
+			pst.setInt(2, 1);
 
 			int validate = pst.executeUpdate();
 
 			if (validate > 0)
-				System.out.println("Done!");
-			
+				System.out.println("Registration updated successfully!!");
+
 		} catch (SQLException e) {
-			//throw new DbException("Email já cadastrado!!");
-			System.out.println("Email já cadastrado!!");
+			e.printStackTrace();
 		}
 		finally {
 			DB.closeStatement(pst);
 			DB.closeConnection();
 		}
+
 	}
 
 }
